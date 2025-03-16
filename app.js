@@ -30,7 +30,7 @@ app.set("views", path.join(__dirname, "views"));  // to make the compiler look f
 app.use(express.urlencoded({ extended: true }));  // to parse URL encoded format to javascript object
 app.use(methodOverride("_method"));  // to override POST and GET requests
 app.engine("ejs", ejsMate);  // to use ejsMate for ejs layout
-app.use(express.static(path.join(__dirname, "/public")));  // look for static files in public folder
+app.use(/*"/public",*/ express.static(path.join(__dirname, "/public")));  // look for static files in public folder
 
 const sessionOptions = {
   secret: "mysupersecretcode",  // to make the cookies signed
@@ -44,7 +44,7 @@ const sessionOptions = {
 }
 
 app.get("/", (req, res) => {
-  res.send("root");
+  res.redirect("/listings");
 });
 
 // using session middleware to create a session with client
@@ -108,6 +108,7 @@ app.use("/", userRouter);
 
 // handler for all routes. If server reaches here for searching a route that means the page doesn't exist because if page existed the above mentioned handlers would have already sent a response and complete the client-server response cycle
 app.all('*', (req, res, next) => {
+  console.log(req.originalUrl);
   next(new ExpressError(404, "Page Not Found!"));
 })
 

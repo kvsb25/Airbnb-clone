@@ -1,4 +1,5 @@
 const Listing = require("../models/listing.js");
+// const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 
 module.exports.index = async (req, res) => {
     let allListings = await Listing.find({});
